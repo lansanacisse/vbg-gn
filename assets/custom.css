@@ -1,0 +1,456 @@
+/* ============================================================
+   VBG Guinée – Feuille de style principale
+   Dash charge automatiquement tout fichier dans /assets/
+   ============================================================ */
+
+/* ── Variables ────────────────────────────────────────────── */
+:root {
+  --primary:      #4A235A;
+  --primary-dark: #341840;
+  --accent:       #8E44AD;
+  --accent-light: #C39BD3;
+  --bg:           #F9F7FB;
+  --card-bg:      #FFFFFF;
+  --text:         #2C2C2C;
+  --text-muted:   #6B6B6B;
+  --success:      #1E8449;
+  --danger:       #C0392B;
+  --radius:       12px;
+  --radius-sm:    8px;
+  --shadow:       0 2px 16px rgba(74, 35, 90, 0.10);
+  --shadow-hover: 0 6px 24px rgba(74, 35, 90, 0.18);
+  --transition:   0.2s ease;
+  --font:         'Inter', sans-serif;
+}
+
+/* ── Reset & Base ─────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font);
+  background-color: var(--bg);
+  color: var(--text);
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Navbar ───────────────────────────────────────────────── */
+.navbar {
+  border-bottom: 3px solid var(--accent) !important;
+  box-shadow: 0 2px 12px rgba(74, 35, 90, 0.25);
+}
+
+.navbar-brand {
+  font-weight: 700 !important;
+  font-size: 1.15rem !important;
+  letter-spacing: -0.3px;
+}
+
+.nav-link {
+  font-weight: 500 !important;
+  font-size: 0.9rem !important;
+  opacity: 0.85;
+  transition: opacity var(--transition);
+  border-radius: var(--radius-sm);
+  padding: 6px 14px !important;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  opacity: 1;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+/* ── Hero / Header ────────────────────────────────────────── */
+.hero {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+  color: white;
+  padding: 52px 32px 40px;
+  text-align: center;
+}
+
+.hero h1 {
+  font-size: 2.4rem;
+  font-weight: 700;
+  margin: 0;
+  letter-spacing: -0.5px;
+}
+
+.hero p {
+  opacity: 0.85;
+  margin-top: 10px;
+  font-size: 1.05rem;
+}
+
+.hero blockquote {
+  font-style: italic;
+  max-width: 680px;
+  margin: 28px auto 0;
+  opacity: 0.9;
+  font-size: 0.95rem;
+  border-left: 3px solid rgba(255, 255, 255, 0.45);
+  padding-left: 18px;
+  text-align: left;
+  line-height: 1.6;
+}
+
+/* ── Cartes ───────────────────────────────────────────────── */
+.card {
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 20px;
+  border: none !important;
+  transition: box-shadow var(--transition);
+}
+
+.card:hover {
+  box-shadow: var(--shadow-hover);
+}
+
+/* ── KPI ──────────────────────────────────────────────────── */
+.kpi-card {
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  color: white;
+  border-radius: var(--radius);
+  padding: 20px 28px;
+  text-align: center;
+}
+
+.kpi-card .kpi-label {
+  margin: 0;
+  opacity: 0.8;
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  font-weight: 600;
+}
+
+.kpi-card .kpi-value {
+  margin: 6px 0 0;
+  font-size: 2.4rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+/* ── Filtres ──────────────────────────────────────────────── */
+.filters-section {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 32px 24px 0;
+}
+
+.filter-label {
+  font-weight: 600;
+  color: var(--primary);
+  font-size: 0.88rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 6px;
+  display: block;
+}
+
+/* Dropdowns Dash */
+.Select-control {
+  border-radius: var(--radius-sm) !important;
+  border-color: #D8C9E3 !important;
+  font-family: var(--font) !important;
+}
+
+.Select-control:hover {
+  border-color: var(--accent) !important;
+}
+
+.Select.is-focused .Select-control {
+  border-color: var(--accent) !important;
+  box-shadow: 0 0 0 3px rgba(142, 68, 173, 0.15) !important;
+}
+
+.Select-option.is-focused {
+  background-color: #F3E9FA !important;
+  color: var(--primary) !important;
+}
+
+.Select-option.is-selected {
+  background-color: var(--primary) !important;
+}
+
+/* ── Charts section ───────────────────────────────────────── */
+.charts-section {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 28px 24px 60px;
+}
+
+.chart-card {
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 20px 16px;
+  height: 100%;
+  transition: box-shadow var(--transition);
+}
+
+.chart-card:hover {
+  box-shadow: var(--shadow-hover);
+}
+
+/* ── Formulaire ───────────────────────────────────────────── */
+.form-section {
+  max-width: 760px;
+  margin: 40px auto;
+  padding: 0 20px 60px;
+}
+
+.form-card {
+  background: var(--card-bg);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  padding: 40px 44px;
+}
+
+.form-card .form-label,
+.form-card label {
+  font-weight: 600;
+  color: var(--primary);
+  font-size: 0.88rem;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  margin-bottom: 6px;
+}
+
+.form-control {
+  border-radius: var(--radius-sm) !important;
+  border: 1.5px solid #D8C9E3 !important;
+  font-family: var(--font) !important;
+  font-size: 0.95rem !important;
+  padding: 10px 14px !important;
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+
+.form-control:focus {
+  border-color: var(--accent) !important;
+  box-shadow: 0 0 0 3px rgba(142, 68, 173, 0.15) !important;
+  outline: none !important;
+}
+
+/* ── Bouton principal ─────────────────────────────────────── */
+.btn-primary-vbg {
+  background: linear-gradient(135deg, var(--primary), var(--accent)) !important;
+  border: none !important;
+  border-radius: var(--radius-sm) !important;
+  padding: 13px 32px !important;
+  font-weight: 600 !important;
+  font-size: 1rem !important;
+  width: 100%;
+  color: white !important;
+  letter-spacing: 0.3px;
+  transition: opacity var(--transition), transform var(--transition), box-shadow var(--transition);
+  cursor: pointer;
+}
+
+.btn-primary-vbg:hover {
+  opacity: 0.92;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(74, 35, 90, 0.30);
+}
+
+.btn-primary-vbg:active {
+  transform: translateY(0);
+}
+
+/* ── Alertes ──────────────────────────────────────────────── */
+.alert {
+  border-radius: var(--radius-sm) !important;
+  border: none !important;
+  font-size: 0.93rem;
+}
+
+.alert-success {
+  background: #EAF7EE !important;
+  color: var(--success) !important;
+}
+
+.alert-danger {
+  background: #FDECEA !important;
+  color: var(--danger) !important;
+}
+
+/* ── Footer ───────────────────────────────────────────────── */
+footer {
+  background: var(--primary);
+  color: rgba(255, 255, 255, 0.65);
+  text-align: center;
+  padding: 22px 20px;
+  font-size: 0.82rem;
+}
+
+footer a {
+  color: rgba(255, 255, 255, 0.5);
+  text-decoration: none;
+  transition: color var(--transition);
+}
+
+footer a:hover {
+  color: white;
+}
+
+/* ── Responsive ───────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .hero h1 {
+    font-size: 1.7rem;
+  }
+
+  .hero {
+    padding: 36px 20px 28px;
+  }
+
+  .hero blockquote {
+    font-size: 0.88rem;
+  }
+
+  .form-card {
+    padding: 28px 20px;
+  }
+
+  .kpi-card .kpi-value {
+    font-size: 2rem;
+  }
+
+  .filters-section,
+  .charts-section {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero h1 {
+    font-size: 1.4rem;
+  }
+
+  .nav-link {
+    font-size: 0.82rem !important;
+    padding: 4px 10px !important;
+  }
+}
+
+/* ── Utilitaires ──────────────────────────────────────────── */
+.text-primary-vbg { color: var(--primary); }
+.text-accent      { color: var(--accent); }
+.text-muted-vbg   { color: var(--text-muted); }
+.fw-600           { font-weight: 600; }
+.mt-section       { margin-top: 32px; }
+
+/* ============================================================
+   Page Contact Victime – styles spécifiques
+   ============================================================ */
+
+/* ── Bandeau confidentialité ──────────────────────────────── */
+.confidentiality-banner {
+  background: linear-gradient(135deg, #EBF5FB, #D6EAF8);
+  border-left: 4px solid #2E86C1;
+  color: #1A5276;
+  padding: 14px 24px;
+  font-size: 0.92rem;
+  line-height: 1.6;
+  max-width: 1100px;
+  margin: 24px auto 0;
+  border-radius: 0 8px 8px 0;
+}
+
+/* ── En-têtes de section numérotées ──────────────────────── */
+.form-section-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 24px;
+  padding-bottom: 18px;
+  border-bottom: 2px solid #F0E8F6;
+}
+
+.section-number {
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  color: white;
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 0.5px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.section-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin: 0 0 4px;
+}
+
+.section-subtitle {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+/* ── Textarea ─────────────────────────────────────────────── */
+textarea.form-control,
+.form-card textarea {
+  border-radius: var(--radius-sm) !important;
+  border: 1.5px solid #D8C9E3 !important;
+  font-family: var(--font) !important;
+  font-size: 0.95rem !important;
+  transition: border-color var(--transition), box-shadow var(--transition);
+  resize: vertical;
+}
+
+textarea.form-control:focus,
+.form-card textarea:focus {
+  border-color: var(--accent) !important;
+  box-shadow: 0 0 0 3px rgba(142, 68, 173, 0.15) !important;
+  outline: none !important;
+}
+
+/* ── Checklist & Radio ────────────────────────────────────── */
+.form-card .form-check-input:checked {
+  background-color: var(--accent);
+  border-color: var(--accent);
+}
+
+/* ── Bandeau urgence ──────────────────────────────────────── */
+.urgency-banner {
+  margin-top: 24px;
+  padding: 14px 18px;
+  background: #FEF9E7;
+  border-radius: 8px;
+  border-left: 4px solid #F39C12;
+  font-size: 0.92rem;
+  line-height: 1.6;
+}
+
+/* ── Responsive contact ───────────────────────────────────── */
+@media (max-width: 768px) {
+  .confidentiality-banner {
+    margin: 16px 16px 0;
+    font-size: 0.85rem;
+  }
+
+  .form-section-header {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .section-number {
+    width: 30px;
+    height: 30px;
+    font-size: 0.75rem;
+  }
+}
