@@ -1,15 +1,11 @@
 """
-Modèles SQLAlchemy – miroir des tables Supabase.
+Modèles SQLAlchemy – base SQLite locale.
 """
 
 import uuid
 from datetime import datetime, date
 
-from sqlalchemy import (
-    Column, String, Integer, Date, DateTime,
-    ForeignKey, Enum, text
-)
-from sqlalchemy.dialects.postgresql import UUID
+from sqlalchemy import Column, String, Integer, Date, DateTime, ForeignKey
 from sqlalchemy.orm import relationship
 
 from database import Base
@@ -26,12 +22,10 @@ class CaseStatus(str, enum.Enum):
 class Association(Base):
     __tablename__ = "associations"
 
-    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4,
-                server_default=text("gen_random_uuid()"))
+    id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
     name = Column(String, nullable=False)
     region = Column(String, nullable=False)
-    created_at = Column(DateTime, default=datetime.utcnow,
-                        server_default=text("now()"))
+    created_at = Column(DateTime, default=datetime.utcnow)
 
     cases = relationship("Case", back_populates="association")
 
@@ -42,24 +36,16 @@ class Association(Base):
 class Case(Base):
     __tablename__ = "cases"
 
-    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4,
-                server_default=text("gen_random_uuid()"))
-    association_id = Column(UUID(as_uuid=True),
-                            ForeignKey("associations.id"), nullable=True)
+    id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
+    association_id = Column(String, ForeignKey("associations.id"), nullable=True)
     region = Column(String, nullable=False)
     prefecture = Column(String, nullable=False)
     type_violence = Column(String, nullable=False)
     victim_age = Column(Integer, nullable=True)
     victim_gender = Column(String, nullable=True)
     date_incident = Column(Date, nullable=False)
-    status = Column(
-        Enum("pending", "validated", "rejected", name="case_status"),
-        default="pending",
-        server_default="pending",
-        nullable=False,
-    )
-    created_at = Column(DateTime, default=datetime.utcnow,
-                        server_default=text("now()"))
+    status = Column(String, default="pending", nullable=False)
+    created_at = Column(DateTime, default=datetime.utcnow)
 
     association = relationship("Association", back_populates="cases")
 

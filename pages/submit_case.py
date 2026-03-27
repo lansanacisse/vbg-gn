@@ -3,6 +3,10 @@ Page de soumission d'un nouveau cas VBG.
 Destinée aux professionnels de terrain : associations, ONG, travailleurs sociaux.
 """
 
+import dash
+
+dash.register_page(__name__, path="/espace/signaler", title="Signaler un cas – VBG Guinée", order=5)
+
 from datetime import date
 from dash import dcc, html, callback, Input, Output, State, no_update
 import dash_bootstrap_components as dbc

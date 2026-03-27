@@ -1,394 +1,170 @@
 """
-Page d'accueil – VBG Guinée.
-Présentation du contexte et chiffres clés sur les VBG en Guinée.
-
-Images à placer dans le dossier assets/ :
-  - assets/hero-guinee.jpg        : photo de contexte (bannière principale)
-  - assets/action-victimes.jpg    : photo pour la carte "victimes/témoins"
-  - assets/action-associations.jpg: photo pour la carte "associations"
+VBG Guinée – Application principale Dash.
+Lancement : python app.py
 """
 
-from dash import html
+import dash
 import dash_bootstrap_components as dbc
+from dash import dcc, html, Input, Output
+from flask import session
 
-from config import NUMERO_VBG, NUMERO_POLICE
+from config import APP_TITLE, APP_SECRET_KEY, DEBUG, PORT, NUMERO_VBG
+from api import api_bp
+import pages.dashboard as dashboard
+import pages.submit_case as submit_case
+import pages.contact_victime as contact_victime
+import pages.connexion as connexion
+import pages.declarations as declarations
+import pages.home as home
+
+app = dash.Dash(
+    __name__,
+    external_stylesheets=[
+        dbc.themes.BOOTSTRAP,
+        "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap",
+    ],
+    suppress_callback_exceptions=True,
+    title=APP_TITLE,
+    meta_tags=[{"name": "viewport", "content": "width=device-width, initial-scale=1"}],
+)
+
+server = app.server
+server.secret_key = APP_SECRET_KEY
+server.register_blueprint(api_bp)
+
+PRIMARY = "#4A235A"
+ACCENT  = "#8E44AD"
+
+PROTECTED_PATHS = ["/espace/declarations", "/espace/signaler", "/espace/statistiques"]
 
 
-def layout():
-    return html.Div(
-        [
-            # ── Hero avec image ────────────────────────────────────────
-            html.Div(
-                style={
-                    "position": "relative",
-                    "overflow": "hidden",
-                    "borderRadius": "0",
-                    "marginBottom": "0",
-                },
-                children=[
-                    html.Img(
-                        src="/assets/hero-guinee.jpg",
-                        style={
-                            "width": "100%",
-                            "height": "360px",
-                            "objectFit": "cover",
-                            "objectPosition": "center",
-                            "display": "block",
-                            "filter": "brightness(0.45)",
-                        },
-                    ),
-                    html.Div(
-                        style={
-                            "position": "absolute",
-                            "top": 0,
-                            "left": 0,
-                            "right": 0,
-                            "bottom": 0,
-                            "display": "flex",
-                            "flexDirection": "column",
-                            "alignItems": "center",
-                            "justifyContent": "center",
-                            "padding": "32px",
-                            "textAlign": "center",
-                            "color": "white",
-                        },
-                        children=[
-                            html.H1(
-                                "VBG Guinée",
-                                style={
-                                    "fontWeight": 700,
-                                    "fontSize": "2.6rem",
-                                    "margin": "0 0 12px",
-                                },
-                            ),
-                            html.P(
-                                "Plateforme nationale de recensement des violences basées sur le genre "
-                                "en République de Guinée.",
-                                style={
-                                    "fontSize": "1.05rem",
-                                    "opacity": 0.9,
-                                    "maxWidth": "620px",
-                                    "margin": "0 auto 20px",
-                                },
-                            ),
-                            html.Blockquote(
-                                "Collecter une donnée, c'est reconnaître qu'une victime existe. "
-                                "Analyser ces données, c'est construire le chemin vers sa protection.",
-                                style={
-                                    "fontStyle": "italic",
-                                    "fontSize": "0.92rem",
-                                    "opacity": 0.8,
-                                    "maxWidth": "540px",
-                                    "margin": "0 auto",
-                                    "borderLeft": "3px solid rgba(255,255,255,0.45)",
-                                    "paddingLeft": "16px",
-                                    "textAlign": "left",
-                                },
-                            ),
-                        ],
-                    ),
-                ],
+def navbar_public():
+    return dbc.Navbar(
+        dbc.Container([
+            dbc.NavbarBrand(APP_TITLE, href="/", style={"fontWeight": 700, "fontSize": "1.15rem"}),
+            dbc.NavbarToggler(id="navbar-toggler"),
+            dbc.Collapse(
+                dbc.Nav([
+                    dbc.NavItem(dbc.NavLink("Accueil",       href="/",               active="exact")),
+                    dbc.NavItem(dbc.NavLink("Statistiques",   href="/statistiques")),
+                    dbc.NavItem(dbc.NavLink("Déclarer un incident", href="/contacter")),
+                    dbc.NavItem(dbc.NavLink(
+                        "Espace associations",
+                        href="/connexion",
+                        style={"background": "rgba(255,255,255,0.15)", "borderRadius": "8px"},
+                    )),
+                ], navbar=True, className="ms-auto"),
+                id="navbar-collapse", navbar=True,
             ),
-            # ── Chiffres clés ──────────────────────────────────────────
-            html.Div(
-                style={
-                    "maxWidth": "1100px",
-                    "margin": "44px auto",
-                    "padding": "0 24px",
-                },
-                children=[
-                    html.H2(
-                        "La situation en Guinée",
-                        style={
-                            "color": "#4A235A",
-                            "fontWeight": 700,
-                            "marginBottom": "8px",
-                        },
-                    ),
-                    html.P(
-                        "La Guinée figure parmi les pays où la condition des femmes est la plus précaire. "
-                        "Ces chiffres sont issus de rapports de la société civile guinéenne et d'organisations internationales.",
-                        style={
-                            "color": "#6B6B6B",
-                            "marginBottom": "28px",
-                            "maxWidth": "760px",
-                        },
-                    ),
-                    dbc.Row(
-                        [
-                            dbc.Col(
-                                [
-                                    html.Div(
-                                        className="kpi-card",
-                                        children=[
-                                            html.P(
-                                                "Victimes de violences conjugales",
-                                                className="kpi-label",
-                                            ),
-                                            html.H2("85 %", className="kpi-value"),
-                                        ],
-                                    )
-                                ],
-                                md=4,
-                                className="mb-3",
-                            ),
-                            dbc.Col(
-                                [
-                                    html.Div(
-                                        className="kpi-card",
-                                        children=[
-                                            html.P(
-                                                "Touchées par des VBG",
-                                                className="kpi-label",
-                                            ),
-                                            html.H2("92 %", className="kpi-value"),
-                                        ],
-                                    )
-                                ],
-                                md=4,
-                                className="mb-3",
-                            ),
-                            dbc.Col(
-                                [
-                                    html.Div(
-                                        className="kpi-card",
-                                        children=[
-                                            html.P(
-                                                "Victimes d'excision (MGF)",
-                                                className="kpi-label",
-                                            ),
-                                            html.H2("97 %", className="kpi-value"),
-                                        ],
-                                    )
-                                ],
-                                md=4,
-                                className="mb-3",
-                            ),
-                        ],
-                        className="g-3",
-                    ),
-                    dbc.Row(
-                        [
-                            dbc.Col(
-                                [
-                                    html.Div(
-                                        className="kpi-card",
-                                        children=[
-                                            html.P(
-                                                "Filles scolarisées vs garçons (secondaire)",
-                                                className="kpi-label",
-                                            ),
-                                            html.H2("74 %", className="kpi-value"),
-                                        ],
-                                    )
-                                ],
-                                md=4,
-                                className="mb-3",
-                            ),
-                            dbc.Col(
-                                [
-                                    html.Div(
-                                        className="kpi-card",
-                                        children=[
-                                            html.P(
-                                                "Femmes au parlement (2022)",
-                                                className="kpi-label",
-                                            ),
-                                            html.H2("29,6 %", className="kpi-value"),
-                                        ],
-                                    )
-                                ],
-                                md=4,
-                                className="mb-3",
-                            ),
-                            dbc.Col(
-                                [
-                                    html.Div(
-                                        className="kpi-card",
-                                        children=[
-                                            html.P(
-                                                "Victimes non signalées",
-                                                className="kpi-label",
-                                            ),
-                                            html.H2("3 / 4", className="kpi-value"),
-                                        ],
-                                    )
-                                ],
-                                md=4,
-                                className="mb-3",
-                            ),
-                        ],
-                        className="g-3",
-                    ),
-                    html.P(
-                        "Sources : Rapport de la société civile guinéenne pour l'EPU – OHCHR, "
-                        "ONU Annuaire statistique 2024, PNUD Rapport sur le développement humain 2023-2024.",
-                        style={
-                            "fontSize": "0.78rem",
-                            "color": "#9B9B9B",
-                            "marginTop": "10px",
-                        },
-                    ),
-                ],
-            ),
-            html.Hr(
-                style={
-                    "maxWidth": "1100px",
-                    "margin": "0 auto",
-                    "borderColor": "#F0E8F6",
-                }
-            ),
-            # ── Deux actions avec images ───────────────────────────────
-            html.Div(
-                style={
-                    "maxWidth": "1100px",
-                    "margin": "44px auto 60px",
-                    "padding": "0 24px",
-                },
-                children=[
-                    html.H2(
-                        "Agir ensemble",
-                        style={
-                            "color": "#4A235A",
-                            "fontWeight": 700,
-                            "marginBottom": "8px",
-                        },
-                    ),
-                    html.P(
-                        "Deux façons de contribuer à la lutte contre les VBG en Guinée.",
-                        style={"color": "#6B6B6B", "marginBottom": "28px"},
-                    ),
-                    dbc.Row(
-                        [
-                            # Carte victimes
-                            dbc.Col(
-                                [
-                                    html.Div(
-                                        className="form-card",
-                                        style={
-                                            "padding": "0",
-                                            "overflow": "hidden",
-                                            "height": "100%",
-                                        },
-                                        children=[
-                                            html.Img(
-                                                src="/assets/action-victimes.jpg",
-                                                style={
-                                                    "width": "100%",
-                                                    "height": "180px",
-                                                    "objectFit": "cover",
-                                                    "objectPosition": "center",
-                                                    "display": "block",
-                                                },
-                                            ),
-                                            html.Div(
-                                                style={"padding": "24px"},
-                                                children=[
-                                                    html.H4(
-                                                        "Vous êtes victime ou témoin",
-                                                        style={
-                                                            "color": "#4A235A",
-                                                            "fontWeight": 700,
-                                                            "marginBottom": "10px",
-                                                        },
-                                                    ),
-                                                    html.P(
-                                                        "Déclarez un incident en toute confidentialité. "
-                                                        "Nous vous orienterons vers une prise en charge adaptée.",
-                                                        style={
-                                                            "color": "#6B6B6B",
-                                                            "marginBottom": "18px",
-                                                        },
-                                                    ),
-                                                    dbc.Button(
-                                                        "Déclarer un incident",
-                                                        href="/contacter",
-                                                        className="btn-primary-vbg",
-                                                    ),
-                                                ],
-                                            ),
-                                        ],
-                                    ),
-                                ],
-                                md=6,
-                                className="mb-3",
-                            ),
-                            # Carte associations
-                            dbc.Col(
-                                [
-                                    html.Div(
-                                        className="form-card",
-                                        style={
-                                            "padding": "0",
-                                            "overflow": "hidden",
-                                            "height": "100%",
-                                        },
-                                        children=[
-                                            html.Img(
-                                                src="/assets/action-associations.jpg",
-                                                style={
-                                                    "width": "100%",
-                                                    "height": "180px",
-                                                    "objectFit": "cover",
-                                                    "objectPosition": "center",
-                                                    "display": "block",
-                                                },
-                                            ),
-                                            html.Div(
-                                                style={"padding": "24px"},
-                                                children=[
-                                                    html.H4(
-                                                        "Vous êtes une association",
-                                                        style={
-                                                            "color": "#4A235A",
-                                                            "fontWeight": 700,
-                                                            "marginBottom": "10px",
-                                                        },
-                                                    ),
-                                                    html.P(
-                                                        "Connectez-vous à l'espace associations pour signaler des cas, "
-                                                        "valider des déclarations et consulter les données.",
-                                                        style={
-                                                            "color": "#6B6B6B",
-                                                            "marginBottom": "18px",
-                                                        },
-                                                    ),
-                                                    dbc.Button(
-                                                        "Accéder à l'espace associations",
-                                                        href="/connexion",
-                                                        className="btn-primary-vbg",
-                                                    ),
-                                                ],
-                                            ),
-                                        ],
-                                    ),
-                                ],
-                                md=6,
-                                className="mb-3",
-                            ),
-                        ],
-                        className="g-3",
-                    ),
-                    # Bandeau urgence
-                    html.Div(
-                        className="urgency-banner",
-                        style={"marginTop": "32px"},
-                        children=[
-                            html.Strong("En cas de danger immédiat :"),
-                            html.Span("  appelez le "),
-                            html.Strong(
-                                NUMERO_VBG,
-                                style={"fontSize": "1.1rem", "color": "#C0392B"},
-                            ),
-                            html.Span(" (numéro national VBG) ou le "),
-                            html.Strong(
-                                NUMERO_POLICE,
-                                style={"fontSize": "1.1rem", "color": "#C0392B"},
-                            ),
-                            html.Span(" (police / gendarmerie)."),
-                        ],
-                    ),
-                ],
-            ),
-        ]
+        ], fluid=True),
+        color=PRIMARY, dark=True, sticky="top",
+        style={"borderBottom": f"3px solid {ACCENT}"},
     )
+
+
+def navbar_authenticated():
+    return dbc.Navbar(
+        dbc.Container([
+            dbc.NavbarBrand(APP_TITLE, href="/", style={"fontWeight": 700, "fontSize": "1.15rem"}),
+            dbc.NavbarToggler(id="navbar-toggler"),
+            dbc.Collapse(
+                dbc.Nav([
+                    dbc.NavItem(dbc.NavLink("Accueil",        href="/")),
+                    dbc.NavItem(dbc.NavLink("Statistiques",   href="/statistiques")),
+                    dbc.NavItem(dbc.NavLink("Déclarations",          href="/espace/declarations", active="exact")),
+                    dbc.NavItem(dbc.NavLink("Signaler un cas",       href="/espace/signaler",     active="exact")),
+                    dbc.NavItem(dbc.NavLink(
+                        "Déconnexion",
+                        href="/deconnexion",
+                        style={"background": "rgba(255,255,255,0.15)", "borderRadius": "8px"},
+                    )),
+                ], navbar=True, className="ms-auto"),
+                id="navbar-collapse", navbar=True,
+            ),
+        ], fluid=True),
+        color=PRIMARY, dark=True, sticky="top",
+        style={"borderBottom": f"3px solid {ACCENT}"},
+    )
+
+
+footer = html.Footer(
+    style={
+        "background": PRIMARY,
+        "color": "rgba(255,255,255,0.7)",
+        "textAlign": "center",
+        "padding": "22px 20px",
+        "fontSize": "0.82rem",
+    },
+    children=[
+        html.P(
+            f"© 2024 {APP_TITLE} – Plateforme nationale de recensement des VBG",
+            style={"margin": 0},
+        ),
+        html.P([
+            "Urgence : ",
+            html.Strong(NUMERO_VBG, style={"color": "#F1948A"}),
+            "  |  API : ",
+            html.A("/api/cases", href="/api/cases", style={"color": "rgba(255,255,255,0.5)"}),
+            " | ",
+            html.A("/api/stats", href="/api/stats", style={"color": "rgba(255,255,255,0.5)"}),
+        ], style={"margin": "6px 0 0"}),
+    ],
+)
+
+app.layout = html.Div(
+    style={"fontFamily": "'Inter', sans-serif"},
+    children=[
+        dcc.Location(id="url", refresh=False),
+        html.Div(id="navbar-container"),
+        html.Div(id="page-content"),
+        footer,
+    ],
+)
+
+
+@app.callback(
+    Output("navbar-container", "children"),
+    Output("page-content",     "children"),
+    Input("url", "pathname"),
+)
+def display_page(pathname):
+    authenticated = session.get("authenticated", False)
+
+    # Déconnexion
+    if pathname == "/deconnexion":
+        session.clear()
+        return navbar_public(), dcc.Location(href="/", id="logout-redirect", refresh=True)
+
+    # Pages protégées — redirection si non connecté
+    if pathname in PROTECTED_PATHS and not authenticated:
+        return navbar_public(), dcc.Location(href="/connexion", id="auth-redirect", refresh=True)
+
+    # Routing
+    if pathname == "/connexion":
+        if authenticated:
+            return navbar_authenticated(), dcc.Location(href="/espace/declarations", id="already-auth", refresh=True)
+        return navbar_public(), connexion.layout()
+
+    if pathname == "/espace/declarations":
+        return navbar_authenticated(), declarations.layout()
+
+    if pathname == "/espace/signaler":
+        return navbar_authenticated(), submit_case.layout()
+
+    if pathname == "/contacter":
+        return navbar_public(), contact_victime.layout()
+
+    if pathname == "/statistiques":
+        nav = navbar_authenticated() if authenticated else navbar_public()
+        return nav, dashboard.layout()
+
+    if pathname == "/espace/statistiques":
+        return navbar_authenticated(), dashboard.layout()
+
+    # Accueil par défaut
+    nav = navbar_authenticated() if authenticated else navbar_public()
+    return nav, home.layout()
+
+
+if __name__ == "__main__":
+    app.run(debug=DEBUG, host="0.0.0.0", port=PORT)

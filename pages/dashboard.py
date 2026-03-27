@@ -2,7 +2,10 @@
 Page Dashboard – visualisations des cas VBG validés.
 """
 
+import dash
 import plotly.graph_objects as go
+
+dash.register_page(__name__, path="/statistiques", title="Statistiques – VBG Guinée", order=1)
 import plotly.express as px
 from dash import dcc, html, callback, Input, Output
 import dash_bootstrap_components as dbc

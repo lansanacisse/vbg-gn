@@ -2,7 +2,10 @@
 Page "Déclarer un incident" – Formulaire de prise en charge pour victimes/témoins VBG.
 """
 
+import dash
 from datetime import date
+
+dash.register_page(__name__, path="/contacter", title="Déclarer un incident – VBG Guinée", order=2)
 from dash import dcc, html, callback, Input, Output, State, no_update
 import dash_bootstrap_components as dbc
 

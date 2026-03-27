@@ -2,7 +2,10 @@
 Page de connexion pour les associations partenaires.
 """
 
+import dash
 from dash import dcc, html, callback, Input, Output, State, no_update
+
+dash.register_page(__name__, path="/connexion", title="Connexion – VBG Guinée", order=3)
 import dash_bootstrap_components as dbc
 from flask import session
 

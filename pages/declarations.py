@@ -4,6 +4,10 @@ Liste les cas pending avec actions valider / rejeter.
 """
 
 import dash
+
+dash.register_page(__name__, path="/espace/declarations", title="Déclarations – VBG Guinée", order=4)
+
+import dash
 from dash import html, callback, Input, Output, State, ctx, no_update, dcc
 import dash_bootstrap_components as dbc
 

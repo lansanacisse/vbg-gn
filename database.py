@@ -1,13 +1,10 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base
-from config import SUPABASE_DB_URL
+from config import DB_URL
 
 engine = create_engine(
-    SUPABASE_DB_URL,
-    pool_pre_ping=True,
-    pool_size=5,
-    max_overflow=10,
-    connect_args={"sslmode": "require"},
+    DB_URL,
+    connect_args={"check_same_thread": False},  # requis pour SQLite
 )
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)

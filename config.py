@@ -3,11 +3,9 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-SUPABASE_URL = os.getenv("SUPABASE_URL", "https://xxxx.supabase.co")
-SUPABASE_DB_URL = os.getenv(
-    "SUPABASE_DB_URL",
-    "postgresql://postgres:<PASSWORD>@db.<PROJECT_REF>.supabase.co:5432/postgres",
-)
+# Chemin vers la base SQLite locale
+_BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DB_URL = os.getenv("DB_URL", f"sqlite:///{os.path.join(_BASE_DIR, 'vbg_guinee.db')}")
 
 APP_TITLE = "VBG Guinée"
 APP_SECRET_KEY = os.getenv("APP_SECRET_KEY", "change-me-in-production")
