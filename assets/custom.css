@@ -1,30 +1,28 @@
-/* ============================================================
-   VBG Guinée – Feuille de style principale
-   Dash charge automatiquement tout fichier dans /assets/
-   ============================================================ */
-
-/* ── Variables ────────────────────────────────────────────── */
 :root {
-  --primary:      #4A235A;
+  --primary: #4A235A;
   --primary-dark: #341840;
-  --accent:       #8E44AD;
+  --accent: #8E44AD;
   --accent-light: #C39BD3;
-  --bg:           #F9F7FB;
-  --card-bg:      #FFFFFF;
-  --text:         #2C2C2C;
-  --text-muted:   #6B6B6B;
-  --success:      #1E8449;
-  --danger:       #C0392B;
-  --radius:       12px;
-  --radius-sm:    8px;
-  --shadow:       0 2px 16px rgba(74, 35, 90, 0.10);
+  --bordeaux: #7B1D2A;
+  --bordeaux-light: #A93244;
+  --bg: #F9F7FB;
+  --card-bg: #FFFFFF;
+  --text: #2C2C2C;
+  --text-muted: #6B6B6B;
+  --success: #1E8449;
+  --danger: #C0392B;
+  --radius: 12px;
+  --radius-sm: 8px;
+  --shadow: 0 2px 16px rgba(74, 35, 90, 0.10);
   --shadow-hover: 0 6px 24px rgba(74, 35, 90, 0.18);
-  --transition:   0.2s ease;
-  --font:         'Inter', sans-serif;
+  --transition: 0.2s ease;
+  --font: 'Inter', sans-serif;
 }
 
-/* ── Reset & Base ─────────────────────────────────────────── */
-*, *::before, *::after {
+
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
@@ -37,7 +35,7 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* ── Navbar ───────────────────────────────────────────────── */
+
 .navbar {
   border-bottom: 3px solid var(--accent) !important;
   box-shadow: 0 2px 12px rgba(74, 35, 90, 0.25);
@@ -64,7 +62,7 @@ body {
   background: rgba(255, 255, 255, 0.12);
 }
 
-/* ── Hero / Header ────────────────────────────────────────── */
+
 .hero {
   background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
   color: white;
@@ -97,7 +95,55 @@ body {
   line-height: 1.6;
 }
 
-/* ── Cartes ───────────────────────────────────────────────── */
+
+.hero-pro {
+  background: linear-gradient(135deg, var(--bordeaux) 0%, var(--bordeaux-light) 100%);
+  color: white;
+  padding: 52px 32px 40px;
+  text-align: center;
+}
+
+.hero-pro h1 {
+  font-size: 2.4rem;
+  font-weight: 700;
+  margin: 0;
+  letter-spacing: -0.5px;
+}
+
+.hero-pro p {
+  opacity: 0.9;
+  margin-top: 10px;
+  font-size: 1.05rem;
+  max-width: 680px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
+.hero-victime {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+  color: white;
+  padding: 52px 32px 40px;
+  text-align: center;
+}
+
+.hero-victime h1 {
+  font-size: 2.4rem;
+  font-weight: 700;
+  margin: 0;
+  letter-spacing: -0.5px;
+}
+
+.hero-victime p {
+  opacity: 0.9;
+  margin-top: 10px;
+  font-size: 1.05rem;
+  max-width: 680px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
 .card {
   background: var(--card-bg);
   border-radius: var(--radius);
@@ -111,7 +157,7 @@ body {
   box-shadow: var(--shadow-hover);
 }
 
-/* ── KPI ──────────────────────────────────────────────────── */
+
 .kpi-card {
   background: linear-gradient(135deg, var(--primary), var(--accent));
   color: white;
@@ -136,7 +182,7 @@ body {
   line-height: 1;
 }
 
-/* ── Filtres ──────────────────────────────────────────────── */
+
 .filters-section {
   max-width: 1100px;
   margin: 0 auto;
@@ -153,7 +199,6 @@ body {
   display: block;
 }
 
-/* Dropdowns Dash */
 .Select-control {
   border-radius: var(--radius-sm) !important;
   border-color: #D8C9E3 !important;
@@ -178,7 +223,7 @@ body {
   background-color: var(--primary) !important;
 }
 
-/* ── Charts section ───────────────────────────────────────── */
+
 .charts-section {
   max-width: 1100px;
   margin: 0 auto;
@@ -198,7 +243,6 @@ body {
   box-shadow: var(--shadow-hover);
 }
 
-/* ── Formulaire ───────────────────────────────────────────── */
 .form-section {
   max-width: 760px;
   margin: 40px auto;
@@ -237,7 +281,31 @@ body {
   outline: none !important;
 }
 
-/* ── Bouton principal ─────────────────────────────────────── */
+
+textarea.form-control,
+.form-card textarea {
+  border-radius: var(--radius-sm) !important;
+  border: 1.5px solid #D8C9E3 !important;
+  font-family: var(--font) !important;
+  font-size: 0.95rem !important;
+  transition: border-color var(--transition), box-shadow var(--transition);
+  resize: vertical;
+}
+
+textarea.form-control:focus,
+.form-card textarea:focus {
+  border-color: var(--accent) !important;
+  box-shadow: 0 0 0 3px rgba(142, 68, 173, 0.15) !important;
+  outline: none !important;
+}
+
+
+.form-card .form-check-input:checked {
+  background-color: var(--accent);
+  border-color: var(--accent);
+}
+
+
 .btn-primary-vbg {
   background: linear-gradient(135deg, var(--primary), var(--accent)) !important;
   border: none !important;
@@ -262,7 +330,32 @@ body {
   transform: translateY(0);
 }
 
-/* ── Alertes ──────────────────────────────────────────────── */
+
+.btn-pro-vbg {
+  background: linear-gradient(135deg, var(--bordeaux), var(--bordeaux-light)) !important;
+  border: none !important;
+  border-radius: var(--radius-sm) !important;
+  padding: 13px 32px !important;
+  font-weight: 600 !important;
+  font-size: 1rem !important;
+  width: 100%;
+  color: white !important;
+  letter-spacing: 0.3px;
+  transition: opacity var(--transition), transform var(--transition), box-shadow var(--transition);
+  cursor: pointer;
+}
+
+.btn-pro-vbg:hover {
+  opacity: 0.92;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(123, 29, 42, 0.30);
+}
+
+.btn-pro-vbg:active {
+  transform: translateY(0);
+}
+
+
 .alert {
   border-radius: var(--radius-sm) !important;
   border: none !important;
@@ -279,77 +372,7 @@ body {
   color: var(--danger) !important;
 }
 
-/* ── Footer ───────────────────────────────────────────────── */
-footer {
-  background: var(--primary);
-  color: rgba(255, 255, 255, 0.65);
-  text-align: center;
-  padding: 22px 20px;
-  font-size: 0.82rem;
-}
 
-footer a {
-  color: rgba(255, 255, 255, 0.5);
-  text-decoration: none;
-  transition: color var(--transition);
-}
-
-footer a:hover {
-  color: white;
-}
-
-/* ── Responsive ───────────────────────────────────────────── */
-@media (max-width: 768px) {
-  .hero h1 {
-    font-size: 1.7rem;
-  }
-
-  .hero {
-    padding: 36px 20px 28px;
-  }
-
-  .hero blockquote {
-    font-size: 0.88rem;
-  }
-
-  .form-card {
-    padding: 28px 20px;
-  }
-
-  .kpi-card .kpi-value {
-    font-size: 2rem;
-  }
-
-  .filters-section,
-  .charts-section {
-    padding-left: 16px;
-    padding-right: 16px;
-  }
-}
-
-@media (max-width: 480px) {
-  .hero h1 {
-    font-size: 1.4rem;
-  }
-
-  .nav-link {
-    font-size: 0.82rem !important;
-    padding: 4px 10px !important;
-  }
-}
-
-/* ── Utilitaires ──────────────────────────────────────────── */
-.text-primary-vbg { color: var(--primary); }
-.text-accent      { color: var(--accent); }
-.text-muted-vbg   { color: var(--text-muted); }
-.fw-600           { font-weight: 600; }
-.mt-section       { margin-top: 32px; }
-
-/* ============================================================
-   Page Contact Victime – styles spécifiques
-   ============================================================ */
-
-/* ── Bandeau confidentialité ──────────────────────────────── */
 .confidentiality-banner {
   background: linear-gradient(135deg, #EBF5FB, #D6EAF8);
   border-left: 4px solid #2E86C1;
@@ -362,7 +385,20 @@ footer a:hover {
   border-radius: 0 8px 8px 0;
 }
 
-/* ── En-têtes de section numérotées ──────────────────────── */
+
+.info-banner-pro {
+  background: linear-gradient(135deg, #FDECEA, #FADBD8);
+  border-left: 4px solid var(--bordeaux);
+  color: #7B1D2A;
+  padding: 14px 24px;
+  font-size: 0.92rem;
+  line-height: 1.6;
+  max-width: 1100px;
+  margin: 24px auto 0;
+  border-radius: 0 8px 8px 0;
+}
+
+
 .form-section-header {
   display: flex;
   align-items: flex-start;
@@ -374,6 +410,22 @@ footer a:hover {
 
 .section-number {
   background: linear-gradient(135deg, var(--primary), var(--accent));
+  color: white;
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 0.5px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.section-number-pro {
+  background: linear-gradient(135deg, var(--bordeaux), var(--bordeaux-light));
   color: white;
   font-weight: 700;
   font-size: 0.85rem;
@@ -401,31 +453,7 @@ footer a:hover {
   margin: 0;
 }
 
-/* ── Textarea ─────────────────────────────────────────────── */
-textarea.form-control,
-.form-card textarea {
-  border-radius: var(--radius-sm) !important;
-  border: 1.5px solid #D8C9E3 !important;
-  font-family: var(--font) !important;
-  font-size: 0.95rem !important;
-  transition: border-color var(--transition), box-shadow var(--transition);
-  resize: vertical;
-}
 
-textarea.form-control:focus,
-.form-card textarea:focus {
-  border-color: var(--accent) !important;
-  box-shadow: 0 0 0 3px rgba(142, 68, 173, 0.15) !important;
-  outline: none !important;
-}
-
-/* ── Checklist & Radio ────────────────────────────────────── */
-.form-card .form-check-input:checked {
-  background-color: var(--accent);
-  border-color: var(--accent);
-}
-
-/* ── Bandeau urgence ──────────────────────────────────────── */
 .urgency-banner {
   margin-top: 24px;
   padding: 14px 18px;
@@ -436,9 +464,84 @@ textarea.form-control:focus,
   line-height: 1.6;
 }
 
-/* ── Responsive contact ───────────────────────────────────── */
+
+footer {
+  background: var(--primary);
+  color: rgba(255, 255, 255, 0.65);
+  text-align: center;
+  padding: 22px 20px;
+  font-size: 0.82rem;
+}
+
+footer a {
+  color: rgba(255, 255, 255, 0.5);
+  text-decoration: none;
+  transition: color var(--transition);
+}
+
+footer a:hover {
+  color: white;
+}
+
+.text-primary-vbg {
+  color: var(--primary);
+}
+
+.text-accent {
+  color: var(--accent);
+}
+
+.text-bordeaux {
+  color: var(--bordeaux);
+}
+
+.text-muted-vbg {
+  color: var(--text-muted);
+}
+
+.fw-600 {
+  font-weight: 600;
+}
+
+.mt-section {
+  margin-top: 32px;
+}
+
+
 @media (max-width: 768px) {
-  .confidentiality-banner {
+
+  .hero h1,
+  .hero-pro h1,
+  .hero-victime h1 {
+    font-size: 1.7rem;
+  }
+
+  .hero,
+  .hero-pro,
+  .hero-victime {
+    padding: 36px 20px 28px;
+  }
+
+  .hero blockquote {
+    font-size: 0.88rem;
+  }
+
+  .form-card {
+    padding: 28px 20px;
+  }
+
+  .kpi-card .kpi-value {
+    font-size: 2rem;
+  }
+
+  .filters-section,
+  .charts-section {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .confidentiality-banner,
+  .info-banner-pro {
     margin: 16px 16px 0;
     font-size: 0.85rem;
   }
@@ -448,9 +551,24 @@ textarea.form-control:focus,
     align-items: center;
   }
 
-  .section-number {
+  .section-number,
+  .section-number-pro {
     width: 30px;
     height: 30px;
     font-size: 0.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+
+  .hero h1,
+  .hero-pro h1,
+  .hero-victime h1 {
+    font-size: 1.4rem;
+  }
+
+  .nav-link {
+    font-size: 0.82rem !important;
+    padding: 4px 10px !important;
   }
 }
