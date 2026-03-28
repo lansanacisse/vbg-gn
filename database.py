@@ -4,7 +4,7 @@ from config import DB_URL
 
 engine = create_engine(
     DB_URL,
-    connect_args={"check_same_thread": False},  # requis pour SQLite
+    connect_args={"check_same_thread": False},
 )
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
@@ -21,5 +21,5 @@ def get_db():
 
 
 def get_session():
-    """Retourne une session directe (pour usage hors générateur)."""
+    """Retourne une session directe (pour usage dans les callbacks)."""
     return SessionLocal()
